@@ -1,0 +1,23 @@
+name: Homebrew CI
+
+on:
+  push:
+    branches: main
+  pull_request:
+
+jobs:
+  homebrew:
+    name: Bump Cask
+    runs-on: macos-latest
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Check out cask
+        uses: actions/checkout@v4
+
+      - name: Run brew style
+        run: brew style
+
+      - name: Run brew audit
+        run: brew audit --cask --strict || true
